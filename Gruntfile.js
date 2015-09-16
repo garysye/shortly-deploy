@@ -10,7 +10,7 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/ServerSpec.js']
+        src: ['test/**/*.js']
       }
     },
 
@@ -91,7 +91,6 @@ module.exports = function(grunt) {
   ////////////////////////////////////////////////////
 
   grunt.registerTask('test', [
-    'jshint',
     'mochaTest'
   ]);
 
