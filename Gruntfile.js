@@ -26,6 +26,9 @@ module.exports = function(grunt) {
     jshint: {
       files: [
         // Add filespec list here
+        'public/client/*.js',
+        'app/**/*.js',
+        'lib/*.js'
       ],
       options: {
         force: 'true',
@@ -39,6 +42,7 @@ module.exports = function(grunt) {
 
     cssmin: {
         // Add filespec list here
+        'public/style.css'
     },
 
     watch: {
