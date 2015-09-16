@@ -14,10 +14,6 @@ module.exports = function(grunt) {
       }
     },
 
-    node: {
-      files: [ 'server.js' ]
-    },
-
     nodemon: {
       dev: {
         script: 'server.js'
@@ -30,9 +26,6 @@ module.exports = function(grunt) {
     jshint: {
       files: [
         // Add filespec list here
-        'public/client/*.js',
-        'app/**/*.js',
-        'lib/*.js'
       ],
       options: {
         force: 'true',
@@ -46,7 +39,6 @@ module.exports = function(grunt) {
 
     cssmin: {
         // Add filespec list here
-        files: ['public/style.css']
     },
 
     watch: {
@@ -116,9 +108,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
       // add your production server task here
-      'build',
-      'upload',
-      'nodemon'
   ]);
 
 
