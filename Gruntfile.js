@@ -8,7 +8,7 @@ module.exports = function(grunt) {
       },
       dist: {
         src: ['public/client/*.js'],
-        dest: 'public/client/concat.js'
+        dest: 'public/dist/concat.js'
       }
     },
 
@@ -28,6 +28,11 @@ module.exports = function(grunt) {
     },
 
     uglify: {
+      my_target: {
+        files: {
+          'public/dist/uglified.js' : ['public/dist/concat.js']
+        }
+      }
     },
 
     jshint: {
@@ -102,7 +107,8 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'concat'
+    'concat',
+    'uglify'
   ]);
 
   grunt.registerTask('upload', function(n) {
@@ -115,7 +121,6 @@ module.exports = function(grunt) {
 
   grunt.registerTask('deploy', [
       // add your production server task here
-      'concat'
   ]);
 
 
