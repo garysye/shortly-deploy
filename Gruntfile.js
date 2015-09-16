@@ -42,7 +42,7 @@ module.exports = function(grunt) {
 
     cssmin: {
         // Add filespec list here
-        'public/style.css'
+        files: ['public/style.css']
     },
 
     watch: {
