@@ -50,7 +50,7 @@ module.exports = function(grunt) {
         jshintrc: '.jshintrc',
         ignores: [
           'public/lib/**/*.js',
-          'public/dist/**/*.js'
+          'public/dist/*.js',
         ]
       }
     },
