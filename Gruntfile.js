@@ -10,8 +10,12 @@ module.exports = function(grunt) {
         options: {
           reporter: 'spec'
         },
-        src: ['test/**/*.js']
+        src: ['test/ServerSpec.js']
       }
+    },
+
+    node: {
+      files: [ 'server.js' ]
     },
 
     nodemon: {
@@ -113,7 +117,8 @@ module.exports = function(grunt) {
   grunt.registerTask('deploy', [
       // add your production server task here
       'build',
-      'upload'
+      'upload',
+      'nodemon'
   ]);
 
 
