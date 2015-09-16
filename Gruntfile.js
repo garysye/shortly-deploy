@@ -100,8 +100,6 @@ module.exports = function(grunt) {
   ]);
 
   grunt.registerTask('build', [
-    'concat',
-    'cssmin'
   ]);
 
   grunt.registerTask('upload', function(n) {
