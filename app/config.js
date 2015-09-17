@@ -1,45 +1,92 @@
-var Bookshelf = require('bookshelf');
+var mongoose = require('mongoose');
 var path = require('path');
+mongoose.connect('127.0.0.1');
 
-var db = Bookshelf.initialize({
-  client: 'sqlite3',
-  connection: {
-    host: '127.0.0.1',
-    user: 'your_database_user',
-    password: 'password',
-    database: 'shortlydb',
-    charset: 'utf8',
-    filename: path.join(__dirname, '../db/shortly.sqlite')
-  }
+module.exports = mongoose;
+
+var db = mongoose.connection;
+db.on('error', function(error) {
+  console.error(error);
+});
+db.once('open', function(createTables) {
+  console.log('Mongoose connected.')
+  createTables();
 });
 
-db.knex.schema.hasTable('urls').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('urls', function (link) {
-      link.increments('id').primary();
-      link.string('url', 255);
-      link.string('base_url', 255);
-      link.string('code', 100);
-      link.string('title', 255);
-      link.integer('visits');
-      link.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
+var createTables = function() {
+  module.exports.urlSchema = mongoose.Schema({
+    url: String,
+    base_url: String,
+    code: String,
+    title: String,
+    visits: Number
+  });
 
-db.knex.schema.hasTable('users').then(function(exists) {
-  if (!exists) {
-    db.knex.schema.createTable('users', function (user) {
-      user.increments('id').primary();
-      user.string('username', 100).unique();
-      user.string('password', 100);
-      user.timestamps();
-    }).then(function (table) {
-      console.log('Created Table', table);
-    });
-  }
-});
+  module.exports.userSchema = mongoose.Schema({
+    username: String,
+    password: String
+  });
 
-module.exports = db;
+  // var Url = mongoose.model('urls', urlSchema);
+  // var User = mongoose.model('users', userSchema);
+
+  console.log('Tables created');
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+// var Bookshelf = require('bookshelf');
+// var path = require('path');
+
+// var db = Bookshelf.initialize({
+//   client: 'sqlite3',
+//   connection: {
+//     host: '127.0.0.1',
+//     user: 'your_database_user',
+//     password: 'password',
+//     database: 'shortlydb',
+//     charset: 'utf8',
+//     filename: path.join(__dirname, '../db/shortly.sqlite')
+//   }
+// });
+
+// db.knex.schema.hasTable('urls').then(function(exists) {
+//   if (!exists) {
+//     db.knex.schema.createTable('urls', function (link) {
+//       link.increments('id').primary();
+//       link.string('url', 255);
+//       link.string('base_url', 255);
+//       link.string('code', 100);
+//       link.string('title', 255);
+//       link.integer('visits');
+//       link.timestamps();
+//     }).then(function (table) {
+//       console.log('Created Table', table);
+//     });
+//   }
+// });
+
+// db.knex.schema.hasTable('users').then(function(exists) {
+//   if (!exists) {
+//     db.knex.schema.createTable('users', function (user) {
+//       user.increments('id').primary();
+//       user.string('username', 100).unique();
+//       user.string('password', 100);
+//       user.timestamps();
+//     }).then(function (table) {
+//       console.log('Created Table', table);
+//     });
+//   }
+// });
+
+// module.exports = db;
