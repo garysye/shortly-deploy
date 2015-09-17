@@ -51,6 +51,7 @@ module.exports = function(grunt) {
         ignores: [
           'public/lib/**/*.js',
           'public/dist/*.js',
+          'dist/*.js',
         ]
       }
     },
