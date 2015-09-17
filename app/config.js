@@ -1,37 +1,71 @@
+var bcrypt = require('bcrypt-nodejs');
+var Promise = require('bluebird');
+
 var mongoose = require('mongoose');
 var path = require('path');
-mongoose.connect('127.0.0.1');
+
+var host;
+if (process.env.NODE_ENV === 'production') {
+  host = 
+} else {
+  host = '127.0.0.1'
+}
+mongoose.connect(host);
+
+
+
+
+mongoose.connection.on('error', function(error) {
+  console.error('mongoose' + error);
+});
+mongoose.connection.once('open', function() {
+  console.log('Mongoose connected.')
+});
 
 module.exports = mongoose;
+// var createTables = function() {
+//   urlSchema = mongoose.Schema({
+//     url: String,
+//     base_url: String,
+//     code: String,
+//     title: String,
+//     visits: Number
+//   });
+//   urlSchema.pre('save', function(next) {
+//     var shasum = crypto.createHash('sha1');
+//     shasum.update(this.url);
+//     this.code = shasum.digest('hex').slice(0, 5);
+//     next();
+//   });
+//   module.exports.Link = mongoose.model('urls', urlSchema);
 
-var db = mongoose.connection;
-db.on('error', function(error) {
-  console.error(error);
-});
-db.once('open', function(createTables) {
-  console.log('Mongoose connected.')
-  createTables();
-});
+//   userSchema = mongoose.Schema({
+//     username: String,
+//     password: String
+//   });
+//   userSchema.methods = {};
+//   userSchema.methods.comparePassword = function(attemptedPassword, callback) {
+//     bcrypt.compare(attemptedPassword, this.password, function(err, isMatch) {
+//       callback(isMatch);
+//     });
+//   };
+//   userSchema.methods.hashPassword = function() {
+//     var cipher = Promise.promisify(bcrypt.hash);
+//     return cipher(this.password, null, null).bind(this)
+//       .then(function(hash) {
+//         this.password = hash;
+//       });
+//   };
+//   userSchema.pre('save', function(next) {
+//     userSchema.methods.hashPassword();
+//     next();
+//   });
+//   module.exports.User = mongoose.model('User', userSchema);
 
-var createTables = function() {
-  module.exports.urlSchema = mongoose.Schema({
-    url: String,
-    base_url: String,
-    code: String,
-    title: String,
-    visits: Number
-  });
+//   console.log('Tables created');
+// };
 
-  module.exports.userSchema = mongoose.Schema({
-    username: String,
-    password: String
-  });
 
-  // var Url = mongoose.model('urls', urlSchema);
-  // var User = mongoose.model('users', userSchema);
-
-  console.log('Tables created');
-};
 
 
 
